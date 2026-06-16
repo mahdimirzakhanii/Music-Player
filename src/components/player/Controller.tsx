@@ -6,16 +6,21 @@ import Shuffle from "../icons/Shuffle";
 import ShuffleOff from "@/asstes/image/shuffle-off.png";
 import RepeatOff from "@/asstes/image/repeat-off.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Repeat from "../icons/Repeat";
 import RepeatOne from "../icons/RepeatOne";
 import { usePlayerStore } from "@/stores/playerStore";
+import { useFilesStore } from "@/stores/filesStore";
 
 const Controller = () => {
+  const volumeRef = useRef<HTMLAudioElement>(null);
+  const { isPlaying, setIsPlaying, audioElement } = usePlayerStore();
+  const { fileSelected } = useFilesStore();
   const [suffle, setSuffle] = useState("off");
   const [repeat, setRepeat] = useState("off");
-  const { isPlaying, setIsPlaying, audioElement } = usePlayerStore();
+  const [volume, setVolume] = useState<null | number>(null);
 
+  // Handle Play/Pause
   const handlePlayPause = () => {
     if (!audioElement) return;
     if (isPlaying) {
@@ -26,45 +31,72 @@ const Controller = () => {
     setIsPlaying(!isPlaying);
   };
 
-  return (
-    <div className="flex items-center justify-center gap-3 w-1/3">
-      {suffle === "off" ? (
-        <Image
-          onClick={() => setSuffle("on")}
-          src={ShuffleOff}
-          alt="shuffle"
-          className="w-7 cursor-pointer"
-        />
-      ) : (
-        <Shuffle
-          onClick={() => setSuffle("off")}
-          className="w-7 cursor-pointer"
-        />
-      )}
-      <Backward className="w-7 cursor-pointer" />
-      <Puase onClick={handlePlayPause} className="w-7 cursor-pointer" />
-      <Forward className="w-7 cursor-pointer" />
+  // Handle Volume
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setVolume(value);
+    if (audioElement) {
+      audioElement.volume = value / 100;
+    }
+  };
 
-      {repeat === "off" ? (
-        <Image
-          onClick={() => setRepeat("on")}
-          src={RepeatOff}
-          alt="ssd"
-          className="w-5 cursor-pointer"
-        />
-      ) : repeat === "on" ? (
-        <Repeat
-          className="w-7 cursor-pointer"
-          onClick={() => setRepeat("one")}
-        />
-      ) : (
-        repeat === "one" && (
-          <RepeatOne
+  return (
+    <div className="flex items-center justify-between gap-3 w-[56%]">
+      <div className="flex items-center justify-center gap-3 ">
+        {suffle === "off" ? (
+          <Image
+            onClick={() => setSuffle("on")}
+            src={ShuffleOff}
+            alt="shuffle"
             className="w-7 cursor-pointer"
-            onClick={() => setRepeat("off")}
           />
-        )
-      )}
+        ) : (
+          <Shuffle
+            onClick={() => setSuffle("off")}
+            className="w-7 cursor-pointer"
+          />
+        )}
+        <Backward className="w-7 cursor-pointer" />
+        <Puase onClick={handlePlayPause} className="w-7 cursor-pointer" />
+        <Forward className="w-7 cursor-pointer" />
+
+        {repeat === "off" ? (
+          <Image
+            onClick={() => setRepeat("on")}
+            src={RepeatOff}
+            alt="ssd"
+            className="w-5 cursor-pointer"
+          />
+        ) : repeat === "on" ? (
+          <Repeat
+            className="w-7 cursor-pointer"
+            onClick={() => setRepeat("one")}
+          />
+        ) : (
+          repeat === "one" && (
+            <RepeatOne
+              className="w-7 cursor-pointer"
+              onClick={() => setRepeat("off")}
+            />
+          )
+        )}
+      </div>
+
+      {/* Volume Slider */}
+      <div className="flex items-center justify-center">
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={volume || 20}
+          onChange={handleVolumeChange}
+        />
+        <audio
+          src={fileSelected?.audioUrl ?? undefined}
+          ref={volumeRef}
+          className="hidden"
+        />
+      </div>
     </div>
   );
 };
