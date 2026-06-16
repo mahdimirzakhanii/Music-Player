@@ -15,7 +15,7 @@ import { useFilesStore } from "@/stores/filesStore";
 const Controller = () => {
   const volumeRef = useRef<HTMLAudioElement>(null);
   const { isPlaying, setIsPlaying, audioElement } = usePlayerStore();
-  const { fileSelected } = useFilesStore();
+  const { fileSelected, setFileSelected, files } = useFilesStore();
   const [suffle, setSuffle] = useState("off");
   const [repeat, setRepeat] = useState("off");
   const [volume, setVolume] = useState<null | number>(null);
@@ -40,6 +40,19 @@ const Controller = () => {
     }
   };
 
+  // Handle Previous/Next
+  const changeMusic = async (direction: string) => {
+    const currentMusic = files.findIndex(
+      (item) => item?.id === fileSelected?.id,
+    );
+    const newIndex = direction === "next" ? currentMusic + 1 : currentMusic - 1;
+    const nextSong = files[newIndex];
+    if (!nextSong) return;
+    await setFileSelected(nextSong);
+    setIsPlaying(true);
+    audioElement?.play();
+  };
+
   return (
     <div className="flex items-center justify-between gap-3 w-[56%]">
       <div className="flex items-center justify-center gap-3 ">
@@ -56,9 +69,15 @@ const Controller = () => {
             className="w-7 cursor-pointer"
           />
         )}
-        <Backward className="w-7 cursor-pointer" />
+        <Backward
+          onClick={() => changeMusic("prev")}
+          className="w-7 cursor-pointer"
+        />
         <Puase onClick={handlePlayPause} className="w-7 cursor-pointer" />
-        <Forward className="w-7 cursor-pointer" />
+        <Forward
+          onClick={() => changeMusic("next")}
+          className="w-7 cursor-pointer"
+        />
 
         {repeat === "off" ? (
           <Image
