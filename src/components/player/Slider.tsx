@@ -6,9 +6,16 @@ import { useEffect, useRef, useState } from "react";
 const Slider = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const fileSelected = useFilesStore((state) => state.fileSelected);
-  const setAudioElement = usePlayerStore((state) => state.setAudioElement);
+  const { setAudioElement, setIsPlaying } = usePlayerStore();
   const [currentTime, setCurrentTime] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!fileSelected || !audioRef.current) return;
+    audioRef.src = fileSelected?.audioUrl;
+    audioRef.current.play();
+    setIsPlaying(true);
+  }, [fileSelected]);
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = Number(e.target.value);

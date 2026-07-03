@@ -2,11 +2,9 @@
 import { useFilesStore } from "@/stores/filesStore";
 import Image from "next/image";
 import Icon from "../Icon";
-import { useState } from "react";
 
 const InfoMusic = () => {
   const fileSelected = useFilesStore((state) => state.fileSelected);
-  const [state, setstate] = useState("")
   if (!fileSelected) return;
   return (
     <div className="flex items-center justify-start gap-3 basis-[30%]">

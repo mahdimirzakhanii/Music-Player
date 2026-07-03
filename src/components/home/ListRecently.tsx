@@ -74,9 +74,9 @@ const ListRecently = () => {
               ></div>
             )}
 
-            <div className="min-h-42 max-h-42 w-full relative overflow-hidden">
+            <div className="min-h-42 max-h-42 w-full relative flex items-center justify-center overflow-hidden">
               {mouseEvent === index && (
-                <Icon name="play" className="absolute w-10" />
+                <Icon name="play" className="absolute w-10 z-50" />
               )}
               {item?.coverUrl ? (
                 <Image

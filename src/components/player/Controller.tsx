@@ -6,17 +6,18 @@ import Shuffle from "../icons/Shuffle";
 import ShuffleOff from "@/asstes/image/shuffle-off.png";
 import RepeatOff from "@/asstes/image/repeat-off.png";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Repeat from "../icons/Repeat";
 import RepeatOne from "../icons/RepeatOne";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useFilesStore } from "@/stores/filesStore";
+import Play from "../icons/Play";
 
 const Controller = () => {
   const volumeRef = useRef<HTMLAudioElement>(null);
   const { isPlaying, setIsPlaying, audioElement } = usePlayerStore();
   const { fileSelected, setFileSelected, files } = useFilesStore();
-  const [suffle, setSuffle] = useState("off");
+  const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState("off");
   const [volume, setVolume] = useState<null | number>(null);
 
@@ -41,31 +42,38 @@ const Controller = () => {
   };
 
   // Handle Previous/Next
-  const changeMusic = async (direction: string) => {
-    const currentMusic = files.findIndex(
-      (item) => item?.id === fileSelected?.id,
+  const changeMusic = (direction: "next" | "prev") => {
+    const currentIndex = files.findIndex(
+      (item) => item.id === fileSelected?.id,
     );
-    const newIndex = direction === "next" ? currentMusic + 1 : currentMusic - 1;
+    if (currentIndex === -1) return;
+    if (shuffle) {
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * files.length);
+      } while (randomIndex === currentIndex);
+      setFileSelected(files[randomIndex]);
+      return;
+    }
+    const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
     const nextSong = files[newIndex];
     if (!nextSong) return;
-    await setFileSelected(nextSong);
-    setIsPlaying(true);
-    audioElement?.play();
+    setFileSelected(nextSong);
   };
 
   return (
     <div className="flex items-center justify-between gap-3 w-[56%]">
       <div className="flex items-center justify-center gap-3 ">
-        {suffle === "off" ? (
+        {!shuffle ? (
           <Image
-            onClick={() => setSuffle("on")}
+            onClick={() => setShuffle(true)}
             src={ShuffleOff}
             alt="shuffle"
             className="w-7 cursor-pointer"
           />
         ) : (
           <Shuffle
-            onClick={() => setSuffle("off")}
+            onClick={() => setShuffle(false)}
             className="w-7 cursor-pointer"
           />
         )}
@@ -73,7 +81,11 @@ const Controller = () => {
           onClick={() => changeMusic("prev")}
           className="w-7 cursor-pointer"
         />
-        <Puase onClick={handlePlayPause} className="w-7 cursor-pointer" />
+        {isPlaying ? (
+          <Puase onClick={handlePlayPause} className="w-7" />
+        ) : (
+          <Play onClick={handlePlayPause} className="w-7" />
+        )}
         <Forward
           onClick={() => changeMusic("next")}
           className="w-7 cursor-pointer"
