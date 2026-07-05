@@ -2,6 +2,7 @@
 import Backward from "../icons/Backward";
 import Forward from "../icons/Forward";
 import Puase from "../icons/Puase";
+import Play from "../icons/Play";
 import Shuffle from "../icons/Shuffle";
 import ShuffleOff from "@/asstes/image/shuffle-off.png";
 import RepeatOff from "@/asstes/image/repeat-off.png";
@@ -11,15 +12,15 @@ import Repeat from "../icons/Repeat";
 import RepeatOne from "../icons/RepeatOne";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useFilesStore } from "@/stores/filesStore";
-import Play from "../icons/Play";
 
 const Controller = () => {
   const volumeRef = useRef<HTMLAudioElement>(null);
   const { isPlaying, setIsPlaying, audioElement } = usePlayerStore();
   const { fileSelected, setFileSelected, files } = useFilesStore();
   const [shuffle, setShuffle] = useState(false);
-  const [repeat, setRepeat] = useState("off");
+  const [repeat, setRepeat] = useState<number | boolean>(true);
   const [volume, setVolume] = useState<null | number>(null);
+  const [ended, setEnded] = useState(false);
 
   // Handle Play/Pause
   const handlePlayPause = () => {
@@ -32,6 +33,8 @@ const Controller = () => {
     setIsPlaying(!isPlaying);
   };
 
+  const currentIndex = files.findIndex((item) => item?.id === fileSelected?.id);
+
   // Handle Volume
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
@@ -43,10 +46,8 @@ const Controller = () => {
 
   // Handle Previous/Next
   const changeMusic = (direction: "next" | "prev") => {
-    const currentIndex = files.findIndex(
-      (item) => item.id === fileSelected?.id,
-    );
     if (currentIndex === -1) return;
+    // Shuffle
     if (shuffle) {
       let randomIndex;
       do {
@@ -60,6 +61,25 @@ const Controller = () => {
     if (!nextSong) return;
     setFileSelected(nextSong);
   };
+
+  // Repeat
+  useEffect(() => {
+    if (!audioElement) return;
+    const handleEnded = () => {
+      const nextIndex = currentIndex + 1;
+      if (nextIndex < files?.length) {
+        setFileSelected(files[nextIndex]);
+        setIsPlaying(true);
+      } else if (nextIndex >= files?.length) {
+        setFileSelected(files[0]);
+        setIsPlaying(true);
+      }
+    };
+    audioElement.addEventListener("ended", handleEnded);
+    return () => {
+      audioElement.removeEventListener("ended", handleEnded);
+    };
+  }, [audioElement, files, fileSelected]);
 
   return (
     <div className="flex items-center justify-between gap-3 w-[56%]">
@@ -91,23 +111,23 @@ const Controller = () => {
           className="w-7 cursor-pointer"
         />
 
-        {repeat === "off" ? (
+        {!repeat ? (
           <Image
-            onClick={() => setRepeat("on")}
+            onClick={() => setRepeat(1)}
             src={RepeatOff}
             alt="ssd"
             className="w-5 cursor-pointer"
           />
-        ) : repeat === "on" ? (
-          <Repeat
+        ) : repeat === 1 ? (
+          <RepeatOne
             className="w-7 cursor-pointer"
-            onClick={() => setRepeat("one")}
+            onClick={() => setRepeat(true)}
           />
         ) : (
-          repeat === "one" && (
-            <RepeatOne
+          repeat === true && (
+            <Repeat
               className="w-7 cursor-pointer"
-              onClick={() => setRepeat("off")}
+              onClick={() => setRepeat(false)}
             />
           )
         )}
