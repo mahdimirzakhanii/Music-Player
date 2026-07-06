@@ -87,6 +87,8 @@ const Controller = () => {
     };
   }, [audioElement, files, fileSelected, repeat, currentIndex]);
 
+ 
+
   return (
     <div className="flex items-center justify-between gap-3 w-[56%]">
       <div className="flex items-center justify-center gap-3 ">
@@ -141,8 +143,11 @@ const Controller = () => {
           type="range"
           min={0}
           max={100}
-          value={volume || 20}
+          value={volume || 0}
           onChange={handleVolumeChange}
+          style={{
+            background: `linear-gradient(to right, #3b82f6 ${volume}%, #d1d5db ${volume}%)`,
+          }}
         />
         <audio
           src={fileSelected?.audioUrl ?? undefined}

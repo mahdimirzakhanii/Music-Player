@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 const Slider = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const fileSelected = useFilesStore((state) => state.fileSelected);
-  const { setAudioElement, setIsPlaying } = usePlayerStore();
+  const { setAudioElement, setIsPlaying, audioElement } = usePlayerStore();
   const [currentTime, setCurrentTime] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
 
@@ -44,15 +44,22 @@ const Slider = () => {
     };
   }, [setAudioElement]);
 
+  const progress =
+    ((audioElement?.currentTime || 0) / (audioElement?.duration || 0)) * 100;
+
   return (
     <div className=" flex flex-col w-full">
       <input
+        style={{
+          background: `linear-gradient(to right, #3b82f6 ${progress}%, #d1d5db ${progress}%)`,
+        }}
         type="range"
         min={0}
         max={duration || 0}
         value={currentTime || 0}
         onChange={handleSeek}
       />
+
       <audio
         ref={audioRef}
         src={fileSelected?.audioUrl ?? undefined}
