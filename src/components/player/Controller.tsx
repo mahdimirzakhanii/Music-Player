@@ -4,14 +4,13 @@ import Forward from "../icons/Forward";
 import Puase from "../icons/Puase";
 import Play from "../icons/Play";
 import Shuffle from "../icons/Shuffle";
-import ShuffleOff from "@/asstes/image/shuffle-off.png";
-import RepeatOff from "@/asstes/image/repeat-off.png";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Repeat from "../icons/Repeat";
 import RepeatOne from "../icons/RepeatOne";
 import { usePlayerStore } from "@/stores/playerStore";
 import { useFilesStore } from "@/stores/filesStore";
+import ShuffleOff from "../icons/ShuffleOff";
+import RepeatOff from "../icons/RepeatOff";
 
 const Controller = () => {
   const volumeRef = useRef<HTMLAudioElement>(null);
@@ -61,7 +60,6 @@ const Controller = () => {
     setFileSelected(nextSong);
   };
 
-
   // Repeat
   useEffect(() => {
     if (!audioElement) return;
@@ -93,10 +91,8 @@ const Controller = () => {
     <div className="flex items-center justify-between gap-3 w-[56%]">
       <div className="flex items-center justify-center gap-3 ">
         {!shuffle ? (
-          <Image
+          <ShuffleOff
             onClick={() => setShuffle(true)}
-            src={ShuffleOff}
-            alt="shuffle"
             className="w-7 cursor-pointer"
           />
         ) : (
@@ -120,11 +116,9 @@ const Controller = () => {
         />
 
         {!repeat ? (
-          <Image
+          <RepeatOff
+            className="w-7 cursor-pointer"
             onClick={() => setRepeat(1)}
-            src={RepeatOff}
-            alt="ssd"
-            className="w-5 cursor-pointer"
           />
         ) : repeat === 1 ? (
           <RepeatOne
