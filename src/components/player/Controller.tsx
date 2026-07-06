@@ -20,7 +20,6 @@ const Controller = () => {
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<number | boolean>(true);
   const [volume, setVolume] = useState<null | number>(null);
-  const [ended, setEnded] = useState(false);
 
   // Handle Play/Pause
   const handlePlayPause = () => {
@@ -62,24 +61,33 @@ const Controller = () => {
     setFileSelected(nextSong);
   };
 
+
   // Repeat
   useEffect(() => {
     if (!audioElement) return;
     const handleEnded = () => {
       const nextIndex = currentIndex + 1;
-      if (nextIndex < files?.length) {
-        setFileSelected(files[nextIndex]);
+      if (repeat === true) {
+        if (nextIndex < files?.length) {
+          setFileSelected(files[nextIndex]);
+          setIsPlaying(true);
+        } else if (nextIndex >= files?.length) {
+          setFileSelected(files[0]);
+          setIsPlaying(true);
+        }
+      } else if (repeat === 1) {
+        audioElement.currentTime = 0;
+        audioElement.play();
         setIsPlaying(true);
-      } else if (nextIndex >= files?.length) {
-        setFileSelected(files[0]);
-        setIsPlaying(true);
+      } else if (!repeat) {
+        setIsPlaying(false);
       }
     };
     audioElement.addEventListener("ended", handleEnded);
     return () => {
       audioElement.removeEventListener("ended", handleEnded);
     };
-  }, [audioElement, files, fileSelected]);
+  }, [audioElement, files, fileSelected, repeat, currentIndex]);
 
   return (
     <div className="flex items-center justify-between gap-3 w-[56%]">

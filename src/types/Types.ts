@@ -11,7 +11,7 @@ export type FileStore = {
   setEmptyListSearch: (value: boolean) => void;
 
   fileSelected: MusicMeta | null;
-  setFileSelected: (value: MusicMeta) => void;
+  setFileSelected: (value: MusicMeta | null) => void;
 };
 
 export type MusicMeta = {
