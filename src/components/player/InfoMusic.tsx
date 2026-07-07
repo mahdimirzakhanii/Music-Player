@@ -7,7 +7,7 @@ const InfoMusic = () => {
   const fileSelected = useFilesStore((state) => state.fileSelected);
   if (!fileSelected) return;
   return (
-    <div className="flex items-center justify-start gap-3 basis-[30%]">
+    <div className="flex items-center justify-start gap-3 basis-[10%]">
       <div className="relative flex items-center justify-center w-24 h-24 ">
         {fileSelected?.coverUrl ? (
           <Image

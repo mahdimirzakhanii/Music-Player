@@ -4,7 +4,7 @@ import Forward from "../icons/Forward";
 import Puase from "../icons/Puase";
 import Play from "../icons/Play";
 import Shuffle from "../icons/Shuffle";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Repeat from "../icons/Repeat";
 import RepeatOne from "../icons/RepeatOne";
 import { usePlayerStore } from "@/stores/playerStore";
@@ -13,12 +13,10 @@ import ShuffleOff from "../icons/ShuffleOff";
 import RepeatOff from "../icons/RepeatOff";
 
 const Controller = () => {
-  const volumeRef = useRef<HTMLAudioElement>(null);
   const { isPlaying, setIsPlaying, audioElement } = usePlayerStore();
   const { fileSelected, setFileSelected, files } = useFilesStore();
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<number | boolean>(true);
-  const [volume, setVolume] = useState<null | number>(null);
 
   // Handle Play/Pause
   const handlePlayPause = () => {
@@ -32,15 +30,6 @@ const Controller = () => {
   };
 
   const currentIndex = files.findIndex((item) => item?.id === fileSelected?.id);
-
-  // Handle Volume
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    setVolume(value);
-    if (audioElement) {
-      audioElement.volume = value / 100;
-    }
-  };
 
   // Handle Previous/Next
   const changeMusic = (direction: "next" | "prev") => {
@@ -87,73 +76,63 @@ const Controller = () => {
     };
   }, [audioElement, files, fileSelected, repeat, currentIndex]);
 
- 
+  const className = "w-6 cursor-pointer ";
 
   return (
-    <div className="flex items-center justify-between gap-3 w-[56%]">
-      <div className="flex items-center justify-center gap-3 ">
+    <div className="flex items-center justify-between gap-3 w-full">
+      <div className="flex items-center justify-end ">
         {!shuffle ? (
           <ShuffleOff
             onClick={() => setShuffle(true)}
-            className="w-7 cursor-pointer"
+            className={`${className}`}
           />
         ) : (
           <Shuffle
             onClick={() => setShuffle(false)}
-            className="w-7 cursor-pointer"
+            className={`${className}`}
           />
         )}
+      </div>
+      <div className="flex items-center justify-end gap-3">
         <Backward
           onClick={() => changeMusic("prev")}
-          className="w-7 cursor-pointer"
+          className={`${className}`}
         />
-        {isPlaying ? (
-          <Puase onClick={handlePlayPause} className="w-7" />
-        ) : (
-          <Play onClick={handlePlayPause} className="w-7" />
-        )}
+        <div className="bg-white rounded-full w-9 h-9 flex items-center justify-center cursor-pointer">
+          {isPlaying ? (
+            <Puase
+              onClick={handlePlayPause}
+              className={`${className} text-black`}
+            />
+          ) : (
+            <Play
+              onClick={handlePlayPause}
+              className={`${className} text-black`}
+            />
+          )}
+        </div>
         <Forward
           onClick={() => changeMusic("next")}
-          className="w-7 cursor-pointer"
+          className={`${className}`}
         />
+      </div>
 
+      <div className="flex items-center justify-end ">
         {!repeat ? (
-          <RepeatOff
-            className="w-7 cursor-pointer"
-            onClick={() => setRepeat(1)}
-          />
+          <RepeatOff className={`${className}`} onClick={() => setRepeat(1)} />
         ) : repeat === 1 ? (
           <RepeatOne
-            className="w-7 cursor-pointer"
+            className={`${className}`}
             onClick={() => setRepeat(true)}
           />
         ) : (
           repeat === true && (
             <Repeat
-              className="w-7 cursor-pointer"
+              className={`${className}`}
               onClick={() => setRepeat(false)}
             />
           )
         )}
-      </div>
-
-      {/* Volume Slider */}
-      <div className="flex items-center justify-center">
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={volume || 0}
-          onChange={handleVolumeChange}
-          style={{
-            background: `linear-gradient(to right, #3b82f6 ${volume}%, #d1d5db ${volume}%)`,
-          }}
-        />
-        <audio
-          src={fileSelected?.audioUrl ?? undefined}
-          ref={volumeRef}
-          className="hidden"
-        />
       </div>
     </div>
   );

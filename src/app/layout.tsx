@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import MainUploadMusic from "@/components/upload-music/MainUploadMusic";
 import MainPlayer from "@/components/player/MainPlayer";
-import BackgroundCoverMusic from "@/components/BackgroundCoverMusic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
