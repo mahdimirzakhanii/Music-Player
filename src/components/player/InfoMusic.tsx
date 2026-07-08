@@ -7,8 +7,8 @@ const InfoMusic = () => {
   const fileSelected = useFilesStore((state) => state.fileSelected);
   if (!fileSelected) return;
   return (
-    <div className="flex items-center justify-start gap-3 basis-[10%]">
-      <div className="relative flex items-center justify-center w-24 h-24 ">
+    <div className="flex items-center justify-start gap-2 basis-[30%]">
+      <div className="relative flex items-center justify-center min-w-24 min-h-24">
         {fileSelected?.coverUrl ? (
           <Image
             src={fileSelected?.coverUrl}
@@ -20,12 +20,23 @@ const InfoMusic = () => {
             // }}
           />
         ) : (
-          <Icon name="music" className="w-20" />
+          <Icon name="music" className="w-24" />
         )}
       </div>
       <div className="flex items-start flex-col justify-center min-h-full">
-        <span className="font-bold">{fileSelected?.title ?? ""}</span>
-        <span className="text-gray-300">{fileSelected?.artist ?? ""}</span>
+        <span className="font-bold " title={fileSelected?.title || ""}>
+          {fileSelected?.title && fileSelected?.title?.length > 30
+            ? fileSelected?.title?.slice(0, 30) + "..."
+            : (fileSelected?.title ?? "")}
+        </span>
+        <span
+          className="text-gray-300 "
+          title={fileSelected?.artist || ""}
+        >
+          {fileSelected?.artist && fileSelected?.artist?.length > 30
+            ? fileSelected?.artist?.slice(0, 30) + "..."
+            : (fileSelected?.artist ?? "")}
+        </span>
       </div>
     </div>
   );

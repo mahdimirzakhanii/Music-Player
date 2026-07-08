@@ -46,7 +46,6 @@ const Slider = () => {
 
   const progress =
     ((audioElement?.currentTime || 0) / (audioElement?.duration || 0)) * 100;
-
   return (
     <div className=" flex flex-col w-full">
       <input

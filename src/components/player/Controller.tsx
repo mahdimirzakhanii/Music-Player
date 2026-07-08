@@ -76,7 +76,7 @@ const Controller = () => {
     };
   }, [audioElement, files, fileSelected, repeat, currentIndex]);
 
-  const className = "w-6 cursor-pointer ";
+  const className = "w-5 cursor-pointer ";
 
   return (
     <div className="flex items-center justify-between gap-3 w-full">
@@ -117,7 +117,7 @@ const Controller = () => {
         />
       </div>
 
-      <div className="flex items-center justify-end ">
+      <div className="flex items-center justify-end gap-2">
         {!repeat ? (
           <RepeatOff className={`${className}`} onClick={() => setRepeat(1)} />
         ) : repeat === 1 ? (

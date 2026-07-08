@@ -29,4 +29,5 @@ export interface PlayerStore {
   setIsPlaying: (value: boolean) => void;
   audioElement: HTMLAudioElement | null;
   setAudioElement: (element: HTMLAudioElement | null) => void;
+  setPlayerVolume: (value: number) => void;
 }
