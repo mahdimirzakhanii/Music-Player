@@ -59,8 +59,15 @@ const Controller = () => {
           setFileSelected(files[nextIndex]);
           setIsPlaying(true);
         } else if (nextIndex >= files?.length) {
-          setFileSelected(files[0]);
-          setIsPlaying(true);
+          const firstSong = files[0];
+          if (firstSong?.id === fileSelected?.id) {
+            audioElement.currentTime = 0;
+            audioElement.play();
+            setIsPlaying(true);
+          } else {
+            setFileSelected(firstSong);
+            setIsPlaying(true);
+          }
         }
       } else if (repeat === 1) {
         audioElement.currentTime = 0;
@@ -77,7 +84,6 @@ const Controller = () => {
   }, [audioElement, files, fileSelected, repeat, currentIndex]);
 
   const className = "w-5 cursor-pointer ";
-
   return (
     <div className="flex items-center justify-between gap-3 w-full">
       <div className="flex items-center justify-end ">

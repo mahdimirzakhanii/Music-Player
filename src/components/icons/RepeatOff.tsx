@@ -17,8 +17,8 @@ export default function RepeatOff(props: React.SVGProps<SVGSVGElement>) {
         x2="212"
         y2="212"
         stroke="currentColor"
-        stroke-width="14"
-        stroke-linecap="round"
+        strokeWidth="14"
+        strokeLinecap="round"
       />
     </svg>
   );
