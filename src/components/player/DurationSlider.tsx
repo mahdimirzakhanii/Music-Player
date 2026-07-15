@@ -1,5 +1,4 @@
 "use client";
-
 import { Slider } from "@/components/ui/slider";
 import { useFilesStore } from "@/stores/filesStore";
 import { usePlayerStore } from "@/stores/playerStore";
