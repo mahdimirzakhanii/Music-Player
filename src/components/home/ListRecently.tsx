@@ -11,7 +11,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 const ListRecently = () => {
   const { files, emptyListSearch, searchFiles, setFileSelected } =
     useFilesStore();
-  const { audioElement,setIsPlaying } = usePlayerStore();
+  const { audioElement, setIsPlaying } = usePlayerStore();
   const [mouseEvent, setMouseEvent] = useState<null | number>(null);
 
   const shortText = (text: string) => {
@@ -21,12 +21,12 @@ const ListRecently = () => {
     return text;
   };
 
-  const selectFile = async(item: MusicMeta) => {
+  const selectFile = async (item: MusicMeta) => {
     await setFileSelected(item);
     audioElement?.play();
-    setIsPlaying(true)
+    setIsPlaying(true);
   };
-  
+
   // Empty list before uplaod files
   if (files?.length <= 0) {
     return (
@@ -55,7 +55,7 @@ const ListRecently = () => {
   // List upload files
   const finalList = searchFiles?.length <= 0 ? files : searchFiles;
   return (
-    <div className="grid grid-cols-6 gap-x-5 gap-y-10 w-full">
+    <div className="grid grid-cols-6 gap-x-5 gap-y-10 w-full ">
       {finalList?.map((item: MusicMeta, index) => {
         const color = palletColor[index % palletColor?.length];
         return (

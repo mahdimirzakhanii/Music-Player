@@ -24,6 +24,7 @@ const MainPlayer = () => {
     }
   };
 
+ 
   return (
     // Object?.keys(fileSelected || {}).length > 0 && (
     <div className="flex z-999 fixed items-start gap-3 w-full px-10 py-3 min-h-32 bottom-0 bg-black">
