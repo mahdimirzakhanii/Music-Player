@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import Icon from "../Icon";
 import MainUploadMusic from "../upload-music/MainUploadMusic";
-import { palletColor } from "../palletColor";
 import { usePlayerStore } from "@/stores/playerStore";
 
 const ListRecently = () => {
@@ -57,7 +56,6 @@ const ListRecently = () => {
   return (
     <div className="grid grid-cols-6 gap-x-5 gap-y-10 w-full ">
       {finalList?.map((item: MusicMeta, index) => {
-        const color = palletColor[index % palletColor?.length];
         return (
           <div
             key={index}
@@ -69,8 +67,8 @@ const ListRecently = () => {
             {/* Hover */}
             {mouseEvent === index && (
               <div
-                className="min-w-full min-h-[108%] h-[108%] flex items-center justify-center rounded-lg absolute -top-2 z-50 opacity-5"
-                style={{ background: color }}
+                className="min-w-full min-h-[108%] h-[108%] flex items-center justify-center rounded-lg absolute -top-2 z-50 opacity-10"
+                style={{ background: "#23d069" }}
               ></div>
             )}
 

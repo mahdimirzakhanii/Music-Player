@@ -3,7 +3,7 @@
 :root {
   --text: #f0fcff;
   --background: #0f0f10;
-  --gold: #FFD700;
+  --gold: #23d069;
 }
 
 @theme inline {
@@ -21,8 +21,6 @@
   --color-blue-800: #2442af;
   --color-blue-900: #253c8a;
   --color-blue-950: #060026;
-
-  --color-gold-500: #FFD700;
 
 }
 

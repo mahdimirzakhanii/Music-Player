@@ -83,7 +83,7 @@ const Controller = () => {
     };
   }, [audioElement, files, fileSelected, repeat, currentIndex]);
 
-  const className = "w-5 cursor-pointer ";
+  const className = "w-6 cursor-pointer ";
   return (
     <div className="flex items-center justify-between gap-3 w-full">
       <div className="flex items-center justify-end ">
@@ -104,17 +104,14 @@ const Controller = () => {
           onClick={() => changeMusic("prev")}
           className={`${className}`}
         />
-        <div className="bg-white rounded-full w-9 h-9 flex items-center justify-center cursor-pointer">
+        <div
+          onClick={handlePlayPause}
+          className="bg-emerald-500 rounded-full w-9 h-9 flex items-center justify-center cursor-pointer"
+        >
           {isPlaying ? (
-            <Puase
-              onClick={handlePlayPause}
-              className={`${className} text-black`}
-            />
+            <Puase className={`${className} `} />
           ) : (
-            <Play
-              onClick={handlePlayPause}
-              className={`${className} text-black`}
-            />
+            <Play className={`${className} `} />
           )}
         </div>
         <Forward
