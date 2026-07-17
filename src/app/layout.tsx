@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import MainUploadMusic from "@/components/upload-music/MainUploadMusic";
 import MainPlayer from "@/components/player/MainPlayer";
+import BackgroundGradient from "@/components/ui/BackgroundGradient";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,14 +26,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="relative overflow-x-hidden min-h-full flex flex-col items-center w-full bg-background dark:text-white">
+      <body className="relative z-999 overflow-x-hidden min-h-full flex flex-col items-center w-full bg-background dark:text-white">
+        <BackgroundGradient />
         <Header />
         <div className="flex items-center justify-end w-[90%] xl:w-[80%]">
           <MainUploadMusic />

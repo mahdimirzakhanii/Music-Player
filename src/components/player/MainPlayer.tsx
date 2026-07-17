@@ -24,10 +24,18 @@ const MainPlayer = () => {
     }
   };
 
- 
   return (
-    // Object?.keys(fileSelected || {}).length > 0 && (
-    <div className="flex z-999 fixed items-start gap-3 w-full px-10 py-3 min-h-32 bottom-0 bg-black">
+    <div
+      style={{
+        background: "rgba(255, 255, 255, 0.05)",
+        backdropFilter: "blur(10px)",
+      }}
+      className="flex z-999 fixed items-start gap-3 w-full px-10 py-3 min-h-32 bottom-0 bg-black"
+    >
+      {/* <div
+        className="w-full min-h-screen absolute inset-0 -z-10"
+        style={gradientStyle}
+      /> */}
       <div className="flex items-center justify-between w-full">
         <InfoMusic />
         <div className="absolute left-1/2 -translate-x-1/2 w-[30%] flex flex-col items-center justify-center gap-5">
