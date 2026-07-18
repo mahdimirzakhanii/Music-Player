@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { MusicMeta } from "@/types/Types";
 import { useEffect } from "react";
+import MainUploadMusic from "../upload-music/MainUploadMusic";
 
 const Header = () => {
   const searchParams = useSearchParams();
@@ -60,18 +61,21 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center w-full py-2 ">
-      <div className="flex items-center justify-between w-[90%] xl:w-[80%]">
+    <div className="flex items-center justify-center w-full py-3 ">
+      <div className="flex items-center justify-between w-[95%] xl:w-[80%]">
         <Image src={Logo} alt="logo" className="w-12 " />
-        <form className="w-1/2" onSubmit={handleSubmit(searchSubmit)}>
+        <form className="w-[70%] xl:w-1/2" onSubmit={handleSubmit(searchSubmit)}>
           <input
             type="text"
             {...register("search")}
             placeholder="Search"
-            className="bg-white/10 placeholder:text-white/40 text-white p-2 rounded-md w-full focus:outline-0 "
+            className="bg-white/10 placeholder:text-white/40 focus:border border-emerald-500 text-white p-2 rounded-md w-full focus:outline-0 "
           />
         </form>
-        <Image src={Dots} alt="dots" className="w-10 cursor-pointer" />
+        <div className=" w-[10%] md:w-[20%] xl:w-[15%] 2xl:w-[12%]">
+        <MainUploadMusic header={true} />
+        </div>
+        {/* <Image src={Dots} alt="dots" className="w-10 cursor-pointer" /> */}
       </div>
     </div>
   );

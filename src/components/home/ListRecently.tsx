@@ -29,10 +29,10 @@ const ListRecently = () => {
   // Empty list before uplaod files
   if (files?.length <= 0) {
     return (
-      <div className="flex flex-col gap-5 w-full items-center min-h-[60vh] justify-center">
-        <Icon name="musicSlash" className="w-24" />
-        <span className="text-4xl font-bold text-white/80">Empty List</span>
-        <div className="flex items-center justify-center w-[90%] xl:w-[80%]">
+      <div className="flex flex-col gap-5 w-full items-center min-h-[45vh] md:min-h-[50vh] justify-center">
+        <Icon name="musicSlash" className="w-16 lg:w-24" />
+        <span className="text-2xl xl:text-4xl font-bold text-white/80">Empty List</span>
+        <div className="flex items-center justify-center w-[45%] sm:w-[30%] lg:w-[20%] xl:w-[15%]">
           <MainUploadMusic />
         </div>
       </div>

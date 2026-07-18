@@ -34,9 +34,9 @@ export default function RootLayout({
       <body className="relative z-999 overflow-x-hidden min-h-full flex flex-col items-center w-full bg-background dark:text-white">
         <BackgroundGradient />
         <Header />
-        <div className="flex items-center justify-end w-[90%] xl:w-[80%]">
+        {/* <div className="flex items-center justify-end w-[90%] xl:w-[80%]">
           <MainUploadMusic />
-        </div>
+        </div> */}
         <div className="w-[90%] xl:w-[80%] mb-44">{children}</div>
         <footer className="w-full">
           <MainPlayer />
