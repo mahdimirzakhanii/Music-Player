@@ -2,10 +2,13 @@
 import { Slider } from "@/components/ui/slider";
 import { useFilesStore } from "@/stores/filesStore";
 import { usePlayerStore } from "@/stores/playerStore";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-const DurationSlider = () => {
-  const audioRef = useRef<HTMLAudioElement>(null);
+interface Props {
+  audioRef: React.RefObject<HTMLAudioElement> | null;
+}
+
+const DurationSlider = ({ audioRef }: Props) => {
   const fileSelected = useFilesStore((state) => state.fileSelected);
   const { setAudioElement, setIsPlaying } = usePlayerStore();
   const [currentTime, setCurrentTime] = useState(0);
@@ -13,7 +16,7 @@ const DurationSlider = () => {
   const [isSeeking, setIsSeeking] = useState(false);
 
   useEffect(() => {
-    if (!fileSelected?.audioUrl || !audioRef.current) return;
+    if (!fileSelected?.audioUrl || !audioRef?.current) return;
     audioRef.current.src = fileSelected.audioUrl;
     audioRef.current.play();
     setIsPlaying(true);
@@ -22,7 +25,7 @@ const DurationSlider = () => {
   }, [fileSelected, setIsPlaying]);
 
   useEffect(() => {
-    const audio = audioRef.current;
+    const audio = audioRef?.current;
     if (!audio) return;
 
     setAudioElement(audio);
@@ -49,7 +52,7 @@ const DurationSlider = () => {
   const handleSeek = (value: number[]) => {
     const newTime = value[0];
     setCurrentTime(newTime);
-    if (audioRef.current) {
+    if (audioRef?.current) {
       audioRef.current.currentTime = newTime;
     }
   };

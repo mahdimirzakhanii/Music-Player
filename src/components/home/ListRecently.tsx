@@ -54,7 +54,7 @@ const ListRecently = () => {
   // List upload files
   const finalList = searchFiles?.length <= 0 ? files : searchFiles;
   return (
-    <div className="grid grid-cols-6 gap-x-5 gap-y-10 w-full ">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-5 gap-y-10 w-full ">
       {finalList?.map((item: MusicMeta, index) => {
         return (
           <div
