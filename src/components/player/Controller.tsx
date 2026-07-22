@@ -85,7 +85,7 @@ const Controller = () => {
 
   const className = "w-6 cursor-pointer ";
   return (
-    <div className="flex items-center justify-center md:justify-between gap-3 w-full">
+    <div className="flex items-center justify-between md:justify-between gap-3 w-full">
       <div className="flex items-center justify-end ">
         {!shuffle ? (
           <ShuffleOff
