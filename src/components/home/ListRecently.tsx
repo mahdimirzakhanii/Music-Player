@@ -8,7 +8,7 @@ import MainUploadMusic from "../upload-music/MainUploadMusic";
 import { usePlayerStore } from "@/stores/playerStore";
 
 const ListRecently = () => {
-  const { files, emptyListSearch, searchFiles, setFileSelected } =
+  const { files, emptyListSearch, searchFiles, setFileSelected, fileSelected } =
     useFilesStore();
   const { audioElement, setIsPlaying } = usePlayerStore();
   const [mouseEvent, setMouseEvent] = useState<null | number>(null);
@@ -26,12 +26,16 @@ const ListRecently = () => {
     setIsPlaying(true);
   };
 
+  const findFiles = files?.find((item) => item?.id === fileSelected?.id);
+
   // Empty list before uplaod files
   if (files?.length <= 0) {
     return (
       <div className="flex flex-col gap-5 w-full items-center min-h-[45vh] md:min-h-[50vh] justify-center">
         <Icon name="musicSlash" className="w-16 lg:w-24" />
-        <span className="text-2xl xl:text-4xl font-bold text-white/80">Empty List</span>
+        <span className="text-2xl xl:text-4xl font-bold text-white/80">
+          Empty List
+        </span>
         <div className="flex items-center justify-center w-[45%] sm:w-[30%] lg:w-[20%] xl:w-[15%]">
           <MainUploadMusic />
         </div>
@@ -65,11 +69,11 @@ const ListRecently = () => {
             className="flex items-center flex-col justify-between relative px-2 w-full gap-2 rounded-md cursor-pointer min-h-55"
           >
             {/* Hover */}
-            {mouseEvent === index && (
+            {(mouseEvent === index || findFiles?.id === item?.id) && (
               <div
                 className="min-w-full min-h-[108%] h-[108%] flex items-center justify-center rounded-lg absolute -top-2 z-50 opacity-10"
                 style={{ background: "#23d069" }}
-              ></div>
+              />
             )}
 
             <div className="min-h-42 max-h-42 w-full relative flex items-center justify-center overflow-hidden">

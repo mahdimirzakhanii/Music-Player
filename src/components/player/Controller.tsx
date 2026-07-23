@@ -44,7 +44,7 @@ const Controller = () => {
       return;
     }
     const newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
-    const nextSong = files[newIndex];
+    const nextSong = newIndex >= files?.length ? files[0] : files[newIndex];
     if (!nextSong) return;
     setFileSelected(nextSong);
   };
