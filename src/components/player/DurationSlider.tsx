@@ -17,7 +17,6 @@ const DurationSlider = ({ audioRef }: Props) => {
 
   useEffect(() => {
     if (!fileSelected?.audioUrl || !audioRef?.current) return;
-    audioRef.current.src = fileSelected.audioUrl;
     audioRef.current.play();
     setIsPlaying(true);
     setCurrentTime(0);
@@ -27,22 +26,17 @@ const DurationSlider = ({ audioRef }: Props) => {
   useEffect(() => {
     const audio = audioRef?.current;
     if (!audio) return;
-
     setAudioElement(audio);
-
     const handleLoadedMetadata = () => {
       setDuration(Number.isFinite(audio.duration) ? audio.duration : 0);
     };
-
     const handleTimeUpdate = () => {
       if (!isSeeking) {
         setCurrentTime(audio.currentTime);
       }
     };
-
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
     audio.addEventListener("timeupdate", handleTimeUpdate);
-
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", handleTimeUpdate);

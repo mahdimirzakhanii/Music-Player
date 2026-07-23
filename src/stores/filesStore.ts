@@ -21,6 +21,6 @@ export const useFilesStore = create<FileStore>((set) => ({
       emptyListSearch: value,
     })),
 
-  fileSelected: {},
+  fileSelected: null,
   setFileSelected: (value) => set(() => ({ fileSelected: value })),
 }));
