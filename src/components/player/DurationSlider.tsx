@@ -5,7 +5,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { useEffect, useState } from "react";
 
 interface Props {
-  audioRef: React.RefObject<HTMLAudioElement> | null;
+  audioRef: React.RefObject<HTMLAudioElement | null>;
 }
 
 const DurationSlider = ({ audioRef }: Props) => {

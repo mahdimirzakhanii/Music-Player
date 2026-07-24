@@ -46,8 +46,11 @@ export const useReadMusicMetadata = () => {
       let coverUrl: string | null = null;
 
       if (picture) {
-        const blob = new Blob([picture?.data], { type: picture.format });
-        coverUrl = await blobToBase64(blob);
+        const blob = new Blob([new Uint8Array(picture.data)], {
+          type: picture.format,
+        });
+
+        coverUrl = URL.createObjectURL(blob);
       }
 
       const newMeta: MusicMeta = {
