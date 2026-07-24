@@ -17,7 +17,7 @@ const DurationSlider = ({ audioRef }: Props) => {
 
   useEffect(() => {
     if (!fileSelected?.audioUrl || !audioRef?.current) return;
-    audioRef.current.play();
+    audioRef?.current.play();
     setIsPlaying(true);
     setCurrentTime(0);
     setDuration(0);

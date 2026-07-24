@@ -54,7 +54,7 @@ const VolumeSlider = () => {
       {/* Mobile */}
       <div className="relative w-full flex md:hidden items-center justify-center gap-2">
         <Volume
-          className="text-white w-5 cursor-pointer"
+          className="text-white w-6 cursor-pointer"
           onClick={() => setShowSliderVolume(!showSliderVolume)}
         />
         {showSliderVolume && (

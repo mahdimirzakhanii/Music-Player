@@ -3,27 +3,53 @@ import { useFilesStore } from "@/stores/filesStore";
 import Controller from "./Controller";
 import InfoMusic from "./InfoMusic";
 import DurationSlider from "./DurationSlider";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import VolumeSlider from "./VolumeSlider";
+import ArrowUp from "../icons/ArrowUp";
+import ArrowDown from "../icons/ArrowDown";
 
 const MainPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const { fileSelected } = useFilesStore();
+  const [showInfoMusic, setShowInfoMusic] = useState(false);
   return (
     fileSelected && (
-      <div className="flex z-999 fixed items-end md:items-start gap-3 w-full px-4 md:px-10 py-8 md:py-3 min-h-24 md:min-h-32 bottom-0 bg-zinc-900/50 backdrop-blur-lg">
-        <div className="relative flex flex-row-reverse md:flex-row items-center justify-between w-full">
+      <div
+        className={`flex z-999 fixed items-end justify-center md:items-start border-t border-t-white/10 gap-3 w-full px-2 md:px-10 py-8 md:py-3 md:min-h-32 bottom-0 bg-zinc-900/50 backdrop-blur-lg ${showInfoMusic ? "min-h-screen" : "min-h-24"}`}
+      >
+        <div
+          onClick={() => setShowInfoMusic(!showInfoMusic)}
+          className={`flex md:hidden absolute rounded-md p-1 right-5 z-999  bg-zinc-900/50 backdrop-blur-lg
+          ${showInfoMusic ? "bottom-22" : "-top-6"}
+          `}
+        >
+          {!showInfoMusic ? (
+            <ArrowUp className="w-5 font-black" />
+          ) : (
+            <ArrowDown className="w-5 font-black" />
+          )}
+        </div>
+        <div
+          className={`${showInfoMusic ? "flex items-center justify-center" : "hidden"} w-full md:hidden absolute min-h-[90vh]`}
+        >
           <InfoMusic />
-          <div className="block md:hidden w-full absolute -top-8">
+        </div>
+
+        <div className="relative flex flex-row-reverse md:flex-row items-center justify-between w-full">
+          <div className="hidden md:block ">
+            <InfoMusic />
+          </div>
+
+          <div className="block md:hidden w-full absolute -top-6.5">
             <DurationSlider audioRef={audioRef} />
           </div>
-          <div className="absolute left-1/2 -translate-x-1/2 w-[85%] md:w-[30%] flex flex-col items-center justify-center gap-5">
+          <div className="absolute left-1/2 -translate-x-[55%] w-[90%] md:w-[30%] flex flex-col items-center justify-center gap-5">
             <div className="hidden md:flex w-full">
               <DurationSlider audioRef={audioRef} />
             </div>
             <Controller />
           </div>
-          {/* Volume SliderF */}
+
           <VolumeSlider />
           <audio
             src={fileSelected?.audioUrl ?? undefined}

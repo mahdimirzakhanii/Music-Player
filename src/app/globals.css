@@ -52,7 +52,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--gold);
   cursor: pointer;
-}
+  }
 
 input[type="range"]::-moz-range-thumb {
   width: 18px;
