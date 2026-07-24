@@ -13,7 +13,7 @@ const MainUploadMusic = ({ header }: Props) => {
     <>
       <input
         type="file"
-        accept="audio/*"
+        accept="audio/*,.mp3,.m4a,.wav,.flac,.aac,.ogg,.wma"
         multiple
         onChange={handleChange}
         id="upload"
