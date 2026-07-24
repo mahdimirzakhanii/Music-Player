@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import MainPlayer from "@/components/player/MainPlayer";
 import BackgroundGradient from "@/components/ui/BackgroundGradient";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Music Player",
@@ -23,7 +24,9 @@ export default function RootLayout({
     >
       <body className="relative z-999 overflow-x-hidden min-h-full flex flex-col items-center w-full bg-background dark:text-white">
         <BackgroundGradient />
-        <Header />
+        <Suspense fallback={"searching..."}>
+          <Header />
+        </Suspense>
         <div className="w-[90%] xl:w-[80%] mb-44">{children}</div>
         <footer className="w-full">
           <MainPlayer />
