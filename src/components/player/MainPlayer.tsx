@@ -15,12 +15,12 @@ const MainPlayer = () => {
   return (
     fileSelected && (
       <div
-        className={`flex z-999 fixed items-end justify-center md:items-start border-t border-t-white/10 gap-3 w-full px-2 md:px-10 py-8 md:py-3 md:min-h-32 bottom-0 bg-zinc-900/50 backdrop-blur-lg ${showInfoMusic ? "min-h-screen" : "min-h-24"}`}
+        className={`flex z-999 fixed items-end justify-center md:items-start border-t border-t-white/10 gap-3 w-full px-5 md:px-10 py-8 md:py-3 md:min-h-32 bottom-0 bg-zinc-900/50 backdrop-blur-lg ${showInfoMusic ? "min-h-screen" : "min-h-28"}`}
       >
         <div
           onClick={() => setShowInfoMusic(!showInfoMusic)}
-          className={`flex md:hidden absolute rounded-md p-1 right-5 z-999  bg-zinc-900/50 backdrop-blur-lg
-          ${showInfoMusic ? "bottom-22" : "-top-6"}
+          className={`flex md:hidden absolute rounded-md p-1  border-b-0 right-5 z-999  bg-zinc-900/50 backdrop-blur-lg
+          ${showInfoMusic ? "bottom-28.5" : "-top-7.5"}
           `}
         >
           {!showInfoMusic ? (
@@ -40,10 +40,10 @@ const MainPlayer = () => {
             <InfoMusic />
           </div>
 
-          <div className="block md:hidden w-full absolute -top-6.5">
+          <div className="block md:hidden w-full absolute -top-9">
             <DurationSlider audioRef={audioRef} />
           </div>
-          <div className="absolute left-1/2 -translate-x-[55%] w-[90%] md:w-[30%] flex flex-col items-center justify-center gap-5">
+          <div className="absolute left-1/2 -translate-x-[55%] w-[93%] md:w-[30%] flex flex-col items-center justify-center gap-5">
             <div className="hidden md:flex w-full">
               <DurationSlider audioRef={audioRef} />
             </div>

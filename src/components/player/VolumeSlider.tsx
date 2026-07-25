@@ -58,7 +58,7 @@ const VolumeSlider = () => {
           onClick={() => setShowSliderVolume(!showSliderVolume)}
         />
         {showSliderVolume && (
-          <div className="absolute -top-9 right-0 flex items-center gap-1 w-32 p-2 bg-zinc-900/30 backdrop-blur-lg border border-white/10 rounded-md">
+          <div className="absolute -top-9 right-0 flex items-center gap-1 w-36 p-2 bg-zinc-900/30 backdrop-blur-lg border border-white/10 rounded-md">
             {volume === 0 ? (
               <VolumeOff
                 onClick={() => {
