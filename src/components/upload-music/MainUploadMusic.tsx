@@ -22,7 +22,7 @@ const MainUploadMusic = ({ header }: Props) => {
       <label
         htmlFor="upload"
         className="flex items-center justify-center gap-2 py-2 w-full border border-emerald-500 text-emerald-500
-        active:text-white active:bg-emerald-800  rounded-md duration-300 cursor-pointer"
+        active:text-white active:bg-emerald-800 rounded-md duration-300 cursor-pointer"
       >
         <span
           className={`${header && "hidden"} md:block text-sm lg:text-base border-r-2 pr-2 border-emerald-900`}

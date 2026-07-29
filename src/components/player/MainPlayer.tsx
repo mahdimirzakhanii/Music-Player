@@ -23,11 +23,11 @@ const MainPlayer = () => {
   return (
     fileSelected && (
       <div
-        className={`flex z-999 fixed items-end justify-center md:items-start border-t border-t-white/10 gap-3 w-full px-6 md:px-10 py-8 md:py-3 md:min-h-32 bottom-0 bg-zinc-900/50 backdrop-blur-lg ${showInfoMusic ? "min-h-screen" : "min-h-28"}`}
+        className={`flex z-999 fixed items-end justify-center md:items-start border-t border-t-white/10 gap-3 w-full px-6 md:px-10 py-8 md:py-3 md:min-h-32 bottom-0 bg-zinc-900/50 backdrop-blur-lg transition-[min-height] duration-700 ease-in-out ${showInfoMusic ? "min-h-screen" : "min-h-28"}`}
       >
         <div
           onClick={() => setShowInfoMusic(!showInfoMusic)}
-          className={`flex md:hidden absolute rounded-md p-1 border-b-0 right-5 z-999  bg-zinc-900/50 backdrop-blur-lg
+          className={`flex md:hidden absolute rounded-md p-1 border-b-0 right-5 z-999 bg-zinc-900/50 backdrop-blur-lg
           ${showInfoMusic ? "bottom-28.5" : "-top-7.5"}
           `}
         >
@@ -38,11 +38,11 @@ const MainPlayer = () => {
           )}
         </div>
         <div
-          className={`transform transition-all w-full md:hidden bg-amber-400 absolute duration-700 min-h-[90vh]
+          className={`transform transition-transform duration-700 ease-in-out w-full md:hidden absolute flex items-center justify-center min-h-[90vh]
             ${
               showInfoMusic
-                ? "flex items-center justify-center translate-y-0"
-                : "translate-y-full hidden"
+                ? "translate-y-0"
+                : "translate-y-full pointer-events-none"
             } `}
         >
           <InfoMusic />
