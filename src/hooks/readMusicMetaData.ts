@@ -36,7 +36,7 @@ export const useReadMusicMetadata = () => {
   const readMusicMetadata = async (file: File) => {
     try {
       const metadata = await parseBlob(file);
-      const id = Math.floor(Math.random() * 100);
+      const id = crypto.randomUUID(); 
       const title = metadata.common.title || "";
       const artist = metadata.common.artist || "";
       const album = metadata.common.album || "";
