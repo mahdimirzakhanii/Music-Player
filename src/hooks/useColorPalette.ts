@@ -1,55 +1,64 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Vibrant } from "node-vibrant/browser";
-
+import { getColor, getPalette } from "colorthief";
 export interface ColorPalette {
-  vibrant?: string;
-  darkVibrant?: string;
-  lightVibrant?: string;
-  muted?: string;
-  darkMuted?: string;
-  lightMuted?: string;
+  dominant: string;
+  palette: string[];
 }
 
-export const useColorPalette = (imageUrl: string | null | undefined) => {
+export const useColorPalette = (
+  imageUrl: string | null | undefined,
+  colorCount = 6,
+) => {
   const [palette, setPalette] = useState<ColorPalette | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     if (!imageUrl) {
       setPalette(null);
       return;
     }
-
-    let isCancelled = false;
+    let cancelled = false;
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = imageUrl;
     setIsLoading(true);
-
-    Vibrant.from(imageUrl)
-      .getPalette()
-      .then((result) => {
-        if (isCancelled) return;
-
+    const extractColors = async () => {
+      try {
+        const dominantColor = await getColor(img);
+        const paletteColors = await getPalette(img, { colorCount });
+        if (cancelled) return;
+        if (!dominantColor || !paletteColors) {
+          setPalette(null);
+          return;
+        }
         setPalette({
-          vibrant: result.Vibrant?.hex,
-          darkVibrant: result.DarkVibrant?.hex,
-          lightVibrant: result.LightVibrant?.hex,
-          muted: result.Muted?.hex,
-          darkMuted: result.DarkMuted?.hex,
-          lightMuted: result.LightMuted?.hex,
+          dominant: dominantColor.hex(),
+          palette: paletteColors.map((color) => color.hex()),
         });
-      })
-      .catch((error) => {
-        console.error("خطا در استخراج رنگ از تصویر:", error);
-        if (!isCancelled) setPalette(null);
-      })
-      .finally(() => {
-        if (!isCancelled) setIsLoading(false);
-      });
-
-    return () => {
-      isCancelled = true;
+      } catch (err) {
+        console.error("خطا در استخراج رنگ از تصویر:", err);
+        if (!cancelled) setPalette(null);
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
     };
-  }, [imageUrl]);
-
-  return { palette, isLoading };
+    if (img.complete) {
+      extractColors();
+    } else {
+      img.onload = extractColors;
+      img.onerror = () => {
+        if (cancelled) return;
+        console.error("بارگذاری تصویر برای استخراج رنگ ناموفق بود");
+        setPalette(null);
+        setIsLoading(false);
+      };
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, [imageUrl, colorCount]);
+  return {
+    palette,
+    isLoading,
+  };
 };

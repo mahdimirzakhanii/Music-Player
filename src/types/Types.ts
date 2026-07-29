@@ -32,11 +32,3 @@ export interface PlayerStore {
   setPlayerVolume: (value: number) => void;
 }
 
-export interface ColorPalette {
-  vibrant?: string;
-  darkVibrant?: string;
-  lightVibrant?: string;
-  muted?: string;
-  darkMuted?: string;
-  lightMuted?: string;
-}

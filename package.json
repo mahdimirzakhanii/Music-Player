@@ -16,6 +16,7 @@
     "@testing-library/react": "^16.3.2",
     "axios": "^1.15.1",
     "clsx": "^2.1.1",
+    "colorthief": "^3.4.0",
     "fast-average-color": "^9.5.2",
     "geist": "^1.7.2",
     "jsdom": "^29.1.0",

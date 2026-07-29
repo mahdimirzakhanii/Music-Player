@@ -12,13 +12,6 @@ const MainPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const { fileSelected } = useFilesStore();
   const [showInfoMusic, setShowInfoMusic] = useState(false);
-  const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAnimate(true);
-    }, 10);
-  }, []);
 
   return (
     fileSelected && (
