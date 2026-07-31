@@ -71,8 +71,8 @@ const ListRecently = () => {
             {/* Hover */}
             {(mouseEvent === index || findFiles?.id === item?.id) && (
               <div
-                className="min-w-full min-h-[108%] h-[108%] flex items-center justify-center rounded-lg absolute -top-2 z-50 opacity-10"
-                style={{ background: "#23d069" }}
+                className="min-w-full min-h-[108%] h-[108%] flex items-center justify-center rounded-lg absolute -top-2 z-50 opacity-10 bg-emerald-300 "
+                // style={{ background: "#23d069" }}
               />
             )}
 

@@ -6,53 +6,22 @@ const BackgroundGradient = () => {
   const { fileSelected } = useFilesStore();
   const { palette } = useColorPalette(fileSelected?.coverUrl);
   console.log(palette);
-  const gradientStyle = palette
-    ? {
-        background: `
-radial-gradient(
-    circle at 20% 20%,
-    ${palette?.palette[0] ?? "#23d069"}40 0%,
-    transparent 30%
-),
-radial-gradient(
-    circle at 80% 25%,
-    ${palette?.palette[1] ?? "#6c5ce7"}35 0%,
-    transparent 30%
-),
-radial-gradient(
-    circle at 50% 90%,
-    ${palette?.palette[2] ?? "#fdcb6e"}35 0%,
-    transparent 35%
-),
-radial-gradient(
-    circle at 15% 80%,
-    ${palette?.palette[3] ?? "#0984e3"}25 0%,
-    transparent 40%
-),
-radial-gradient(
-    circle at 85% 75%,
-    ${palette?.palette[4] ?? "#d63031"}20 0%,
-    transparent 40%
-),
-#11161B
-`,
-        //   background: `linear-gradient(105deg,
-        //   ${palette?.palette[0] ?? "#0f0f10"} 0%,
-        //   ${palette?.palette[1] ?? "#1a1a1a"} 20%,
-        //   ${palette?.palette[2] ?? "#0f0f10"} 40%,
-        //   ${palette?.palette[3] ?? "#0f0f10"} 60%,
-        //   ${palette?.palette[4] ?? "#0f0f10"} 80%,
-        //   ${palette?.palette[5] ?? "#0f0f10"} 100%
-        // )`,
-        transition: "background 0.8s ease",
-      }
-    : { background: "#0f0f10" };
 
+  const gradient = `linear-gradient(105deg, 
+    ${palette?.palette?.[1] ?? "#ecfdf5"} 0%,
+    ${palette?.palette?.[0] ?? "#a7f3ce"} 20%,
+    ${palette?.palette?.[5] ?? "#33d496"} 40%,
+    ${palette?.palette?.[4] ?? "#049162"} 60%,
+    ${palette?.palette?.[3] ?? "#056044"} 80%,
+    ${palette?.palette?.[2] ?? "#022c21"} 100%
+  )`;
   return (
-    <div
-      className="fixed -z-10 opacity-50 inset-0 w-full min-h-screen"
-      style={gradientStyle}
-    />
+    <div className="fixed top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 pointer-events-none">
+      <div
+        className="w-125 h-125 rounded-full blur-[300px] bg-emerald-500 opacity-80 transition-all duration-1000"
+        style={{ background: gradient }}
+      />
+    </div>
   );
 };
 
